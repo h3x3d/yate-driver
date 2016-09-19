@@ -2,10 +2,10 @@ import Connection from './connection';
 import { randId } from './util';
 import { Message, makeKey } from './message';
 
-export default function YateDriver(connOpts, { role = 'global' } = {}, onMessage, log) {
+export default function YateDriver(connOpts, { role = 'global', id, type } = {}, onMessage, log) {
   const messages = new Map();
   const connection = Connection(connOpts, handler, log);
-  connection.send(new Message('%%>connect', role));
+  connection.send(new Message('%%>connect', role, id, type));
 
   function dispatchMessage(msg) {
     return new Promise((res, rej) => {
@@ -74,3 +74,5 @@ export default function YateDriver(connOpts, { role = 'global' } = {}, onMessage
 
   return { setLocal, output, message, install, uninstall, watch, unwatch };
 }
+
+export { response } from './message';

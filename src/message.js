@@ -26,7 +26,9 @@ const KEYFIELDS = {
   '%%>setlocal': ['name'],
   '%%<setlocal': ['name'],
   '%%>install': ['name', 'prio'],
-  '%%<install': ['name', 'prio']
+  '%%<install': ['name', 'prio'],
+  '%%>watch': ['name'],
+  '%%<unwatch': ['name']
 };
 
 
@@ -36,7 +38,7 @@ export class Message {
     let i = 0;
     for (const field of fields) {
       if (field === RESTPARAMS) {
-        if (typeof args[i] === 'object') {
+        if (typeof args[i] !== 'string') {
           this.params = args[i];
           break;
         }
@@ -44,8 +46,8 @@ export class Message {
         this.params = {};
         while (i < args.length) {
           const curArg = args[i++];
-          const eqPos = curArg.strpos('=');
-          this.params[curArg.substr(0, eqPos)] = curArg.substr(eqPos);
+          const eqPos = curArg.indexOf('=');
+          this.params[curArg.substr(0, eqPos)] = curArg.substr(eqPos + 1);
         }
       } else {
         this[field] = args[i++];
