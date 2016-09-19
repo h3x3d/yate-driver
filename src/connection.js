@@ -1,11 +1,16 @@
 import { connect } from 'net';
 import { createInterface } from 'readline';
-import EventEmitter from 'events';
-import { parse } from './message';
+import { serialize, parse } from './message';
 
 export default function Connection(connOpts, handler, log) {
   const conn = connect(connOpts);
   const readline = createInterface({ input: conn, output: conn });
+
+  function onMessage(str) {
+    const msg = parse(str);
+    log.debug('>', msg);
+    handler(msg);
+  }
 
   conn.on('connect', () => {
     log.debug('Yate connected');
@@ -19,14 +24,15 @@ export default function Connection(connOpts, handler, log) {
     log.debug('Yate connection closed');
   });
 
-  readline.on('line', str => handler(parse(str)));
+  readline.on('line', onMessage);
 
   function close() {
     conn.end();
   }
 
-  function send(str) {
-    conn.write(str + `\n`);
+  function send(msg) {
+    log.debug('<', msg);
+    conn.write(`${serialize(msg)}\n`);
   }
 
   return { close, send };
