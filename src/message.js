@@ -104,6 +104,6 @@ export function response(orig, processed = true, retval = undefined, params = {}
     processed,
     name === undefined ? orig.name : name,
     retval === undefined ? orig.retval : retval,
-    params
+    Object.assign({}, orig.params, params)
   );
 }
