@@ -1,6 +1,6 @@
 import Connection from './connection';
 import { randId } from './util';
-import { Message, makeKey } from './message';
+import { Message, makeKey, response } from './message';
 
 export default function YateDriver(connOpts, { role = 'global', id, type } = {}, onMessage, log) {
   const messages = new Map();
@@ -65,6 +65,7 @@ export default function YateDriver(connOpts, { role = 'global', id, type } = {},
           .catch((e) => {
             log.error('E', e);
             output(e.message);
+            connection.send(response(msg, false));
           });
       }
     } else {
