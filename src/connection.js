@@ -16,7 +16,7 @@ export default function Connection(connOpts, handler, log) {
     log.debug('Yate connected');
   });
 
-  conn.on('error', (e) => {
+  conn.on('error', e => {
     log.error('Yate connection error', e);
   });
 

@@ -19,7 +19,7 @@
   "devDependencies": {
     "eslint-config-h3x3d": "h3x3d/eslint-config-h3x3d",
     "babel-preset-h3x3d": "h3x3d/babel-preset-h3x3d",
-    "eslint": "^3.1.1",
+    "eslint": "^3.0.0",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4"
   },

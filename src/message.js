@@ -97,7 +97,13 @@ export function makeKey(msg) {
   return ret.join(':');
 }
 
-export function response(orig, processed = true, retval = undefined, params = {}, name = undefined) {
+export function response(
+  orig,
+  processed = true,
+  retval = undefined,
+  params = {},
+  name = undefined
+) {
   return new Message(
     '%%<message',
     orig.id,

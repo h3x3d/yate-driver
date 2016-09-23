@@ -62,7 +62,7 @@ export default function YateDriver(connOpts, { role = 'global', id, type } = {},
       } else {
         onMessage(msg)
           .then(connection.send)
-          .catch((e) => {
+          .catch(e => {
             log.error('E', e);
             output(e.message);
             connection.send(response(msg, false));
